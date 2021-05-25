@@ -5,4 +5,4 @@ def tangent_line(f,x_0,x_start,x_end,linestyle):
   y = f(x) 
   y_0 = f(x_0)
   y_tan = deriv * (x - x_0) + y_0 
-  plt.plot(x,y_tan,linestyle)
+  plt.plot(x,y_tan,linestyle,label='Tangent line on X=%i'%x_0)
