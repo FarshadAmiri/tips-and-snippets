@@ -1,0 +1,36 @@
+#Starting Django project
+Django-admin startproject PROJECT_NAME
+
+#run the website
+python manage.py runserver
+
+#Start a new app
+python manage.py startapp APP_NAME
+
+
+#Run migrations(to move session tables to the databse)
+py manage.py migrations
+
+
+#Make Migrations (Create and modify database structures)
+py manage.py makemigrations
+
+#To finalize the migration:
+py manage.py migrate
+
+#Run a python shell (console), to run python commands in the web application:
+py manage.py shell
+
+#Admin app setup
+py manage.py createsuperuser
+
+#output a table's rows 
+table.objects.all()
+for ex. flights.objects.all()
+
+#Filter in django syntax (Equals to WHERE in SQL):
+Airport.objects.filter(city = 'New York')
+
+#It only returns one result (first that it finds)
+Airport.objects.get(city='New York') 
+Kinda equal to -> Airport.objects.filter(city = 'New York').first()
