@@ -1,0 +1,14 @@
+#Setting up a virtual env
+>>> python -m venv "C:\Virtual_envs\ai"
+
+# Activaion
+>>> C:\Virtual_envs\ai\Scripts\activate
+
+# Deactivation
+>>> deactivate
+
+# My python location:
+>>> "C:\Users\Farshad\AppData\Local\Programs\Python\Python36"
+
+# Removing a virtual env:
+rm -r name-given
