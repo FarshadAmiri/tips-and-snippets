@@ -3,6 +3,8 @@
 
 Set = [50, 90, 49, 89, 48]
 n = len(Set)
+d = {}
+
 
 for mask in range(2**n):
     l = []
@@ -10,3 +12,5 @@ for mask in range(2**n):
         if mask & (2**i):
             l.append(Set[i])
     d[mask+1] = l
+
+print(d)
