@@ -1,0 +1,3 @@
+### It shows SQL translation of a specific migration file:
+python manage.py sqlmigrate app_label migration_name
+-------------------------------------------------------------------

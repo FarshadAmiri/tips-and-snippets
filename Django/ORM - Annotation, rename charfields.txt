@@ -1,0 +1,9 @@
+class Cake(models.Model):
+    sauce = models.CharField(default="Chocolate", max_length=20)
+
+
+*
+Cake.objects.annotate(
+new_sauce_name=Concat(F('sauce'), Value(' Sauce'), output_field=CharField()
+)).update(sauce=F('new_sauce_name'))
+*
