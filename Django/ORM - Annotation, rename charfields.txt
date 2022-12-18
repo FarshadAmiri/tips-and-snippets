@@ -1,9 +1,18 @@
 class Cake(models.Model):
     sauce = models.CharField(default="Chocolate", max_length=20)
 
-
+<1>
 *
+from django.db.models import CharField, Value, F
+
 Cake.objects.annotate(
 new_sauce_name=Concat(F('sauce'), Value(' Sauce'), output_field=CharField()
 )).update(sauce=F('new_sauce_name'))
+*
+
+
+<2>
+*
+Cake.objects.update(
+        sauce=Replace('sauce', text=Value(' Sauce'), replacement=Value(''))
 *
