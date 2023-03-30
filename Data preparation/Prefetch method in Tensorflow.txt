@@ -1,0 +1,33 @@
+from tensorflow.keras.preprocessing import image_dataset_from_directory
+
+train_dataset = image_dataset_from_directory(directory = "dataset/",
+                                             shuffle=True,
+                                             batch_size=BATCH_SIZE,
+                                             image_size=IMG_SIZE,
+                                             validation_split=0.2,
+                                             subset='training',
+                                             seed=42)
+
+*
+AUTOTUNE = tf.data.experimental.AUTOTUNE
+train_dataset = train_dataset.prefetch(buffer_size=AUTOTUNE)
+*
+
+
+
+-----------------------------------------------------------------------------------------------------
+Explanation: "Using prefetch() prevents a memory bottleneck that can occur when reading from disk.
+It sets aside some data and keeps it ready for when it's needed, by creating a source dataset from
+your input data, applying a transformation to preprocess it, then iterating over the dataset one
+element at a time. Because the iteration is streaming, the data doesn't need to fit into memory.
+You can set the number of elements to prefetch manually, or you can use tf.data.experimental.AUTOTUNE
+to choose the parameters automatically. Autotune prompts tf.data to tune that value dynamically at
+runtime, by tracking the time spent in each operation and feeding those times into an optimization
+algorithm. The optimization algorithm tries to find the best allocation of its CPU budget across all
+tunable operations.
+
+To increase diversity in the training set and help your model learn the data better, it's standard
+practice to augment the images by transforming them, i.e., randomly flipping and rotating them.
+Keras' Sequential API offers a straightforward method for these kinds of data augmentations, with
+built-in, customizable preprocessing layers. These layers are saved with the rest of your model and
+can be re-used later. Ahh, so convenient!"
