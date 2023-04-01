@@ -1,5 +1,0 @@
-Always use deconstructible decorator for custom validator class.
-
-
-# WHY?
-https://www.reddit.com/r/django/comments/xf6ja5/what_does_deconstructible_decorator_in_django_do/
