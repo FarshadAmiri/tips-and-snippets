@@ -1,0 +1,70 @@
+--------------Log in-----------
+*In editors' terminal:
+gh auth login
+
+----------Status---------------
+git status
+
+--------------branch----------
+git branch
+
+---------------Log ------------
+git log
+git log --oneline
+git log --pretty=oneline
+
+---------Checkout: create/change branch | Checkout to older commits-------------
+git checkout main
+git checkout feature/blog
+git checkout fix/auth
+git checkout -b my-branch      *-b flag tells Git to run git branch before running git checkout ＜new-branch＞*
+
+-----------Reset:   ----------------------------------
+
+
+
+----------Reverse:  -------------------------------
+
+
+----------Switch: ---------------------------------
+
+
+--------remote-----------------------------------
+# what remote does this folder have on GitHub server?
+git remote -v 
+
+# remoting a local machine repo to a "remote repo":
+git remote git@github.com/farshadamiri/repo1
+
+--------creating a local machine repo---
+#cd the destination folder and then run:
+git init
+
+--------pull ----------------------------
+git pull -u fix/auth
+
+------------push-------------------------
+git push origin main
+
+
+------------HEADS-----------------------
+cd .git
+cat refs/HEADS/main   or   cat /refs/HEADS/[branch]
+
+
+-------------Diff-------------------------
+*Individual files, branches and commits can all be compared with git diff.
+
+git diff [commit_id] [commit_id]
+git diff Head README.md
+git diff main feature/auth
+
+---------Blame: diff in which lines?----------
+git blame setup.py
+git blame -L 5,15 setup.py     *to narrow output between lines*
+git blame -l setup.py   *to output complete commit IDs*
+
+*you can get commit id which you want to inspect from git blame and then use it with git lof to see exact changes (it works even with short commit IDs*
+
+git log -p a03s8rj9
+
