@@ -34,7 +34,7 @@ DROP COLUMN airline;
 #ALTER TABLE - ALTER/MODIFY DATATYPE
 
 ALTER TABLE flights
-MODIFY COLUMN origin VARCHAR(50);
+MODIFY COLUMN origin CHAR(3);
 
 
 SELECT origin, destination FROM flights WHERE origin = 'Mashhad';
