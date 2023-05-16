@@ -10,6 +10,11 @@ CREATE TABLE flights(
 	destination TEXT NOT NULL,
 	duration INTEGER NOT NULL);
 
+SHOW TABLES;
+
+SHOW COLUMNS FROM flights;
+
+
 INSERT INTO flights (origin, destination, duration) VALUES ('Mashhad', 'Tehran', 25);
 INSERT INTO flights (origin, destination, duration) VALUES ('Shiraz', 'Tabriz', 30);
 INSERT INTO flights (origin, destination, duration) VALUES ('Tehran', 'Bandar Abbas', 35);
