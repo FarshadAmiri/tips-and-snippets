@@ -1,4 +1,8 @@
-#Here are commands within an Example (for better understanding)
+#SQL CheatSheet: 
+
+CREATE DATABASE db1;
+
+USE db1;
 
 CREATE TABLE flights(
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
