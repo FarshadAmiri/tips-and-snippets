@@ -21,6 +21,22 @@ INSERT INTO flights (origin, destination, duration) VALUES ('Tehran', 'Bandar Ab
 
 SELECT * FROM flights;
 
+#ALTER TABLE - ADD Column
+
+ALTER TABLE flights
+ADD airline varchar(255);
+
+#ALTER TABLE - DROP COLUMN
+
+ALTER TABLE flights
+DROP COLUMN airline;
+
+#ALTER TABLE - ALTER/MODIFY DATATYPE
+
+ALTER TABLE flights
+MODIFY COLUMN origin VARCHAR(50);
+
+
 SELECT origin, destination FROM flights WHERE origin = 'Mashhad';
 
 .mode columns     #Show data in columns mode   
