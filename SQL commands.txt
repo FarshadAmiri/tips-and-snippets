@@ -15,6 +15,9 @@ SHOW TABLES;
 
 SHOW COLUMNS FROM flights;
 
+SHOW DATABASES;
+
+
 ****************SELECT***********************
 SELECT origin FROM flights;
 
@@ -35,6 +38,7 @@ SELECT * FROM flights WHERE origin IN ('Tehran', 'Mashhad');
 SELECT * FROM flights WHERE origin LIKE '%a%';    #An origin that has an 'a' whith zero or mroe chars
 before and after it.
 
+
 *******************INSERT INTO*****************
 
 INSERT INTO flights (origin, destination, duration) VALUES ('Mashhad', 'Tehran', 25);
@@ -42,6 +46,7 @@ INSERT INTO flights (origin, destination, duration) VALUES ('Mashhad', 'Tehran',
 INSERT INTO table (column_name) SELECT column from source_table; 
 
 INSERT INTO flights (airline) SELECT companyName FROM airlines; 
+
 
 *******************ALTER**********************
 #ALTER TABLE - ADD Column
@@ -60,11 +65,13 @@ ALTER TABLE table MODIFY COLUMN column_name data_type;
 
 ALTER TABLE players MODIFY COLUMN identityNumber CHAR(10) PRIMARY KEY NOT NULL;
 
+
 **********************************************************
 
 .mode columns     #Show data in columns mode   
 .headers yes      #Show headers (It shows to me even without calling this query)
 .shell cls        #clear command screen
+
 
 ****************** Functions ***********************
 Other Functions: *Average   *Count   *Max   *Min   *Sum
@@ -79,10 +86,15 @@ UPDATE student_tbl SET location = "dormitory" WHERE nationality IS NOT "Iranian"
 
 UPDATE student_tbl SET fund_eligible = "yes" WHERE aveGrade >= 19;
 
+
 *************** DELETE *******************
 DELETE FROM flights WHERE destination = 'Tabriz';
 
+DELETE FROM customers WHERE customerName = "Yasmine"
+
 DELETE FROM flights;   #It deletes the whole table
+
+
 ************** Other Clauses *************
 * LIMIT   *ORDER BY     *GROUP BY    *HAVING 
 
@@ -98,4 +110,6 @@ SELECT * FROM flights GROUP BY origin HAVING 3;      #HAVING works with GROUP BY
 ****************** JOIN ************************
 SELECT last_name, origin, destination FROM fleights JOIN passengers ON fleights.id = passengers.fleight_id;
 # JOIN is equal to INNER JOIN (INNER JOIN is the sqlite preferred name) - Doesn't matter which one to use.
+
+
 
