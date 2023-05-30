@@ -73,15 +73,16 @@ SELECT avg(duration) FROM flights;
 
 
 **************** UPDATE ******************
-UPDATE flights
-	SET duration = 28 
-	WHERE origin IN ('Tehran', 'Mashahd') AND destination IN ('Mashhad','Tehran');
+UPDATE flights SET duration = 28 WHERE origin IN ('Tehran', 'Mashahd') AND destination IN ('Mashhad','Tehran');
 
+UPDATE student_tbl SET location = "dormitory" WHERE nationality IS NOT "Iranian";
+
+UPDATE student_tbl SET fund_eligible = "yes" WHERE aveGrade >= 19;
 
 *************** DELETE *******************
 DELETE FROM flights WHERE destination = 'Tabriz';
 
-
+DELETE FROM flights;   #It deletes the whole table
 ************** Other Clauses *************
 * LIMIT   *ORDER BY     *GROUP BY    *HAVING 
 
