@@ -22,6 +22,8 @@ SELECT origin, duration, destination FROM flights;
 
 SELECT * FROM flights;
 
+SELECT origin, destination FROM flights WHERE origin = 'Mashhad';
+
 SELECT * FROM flights WHERE duration > 500;
  
 SELECT * FROM flights WHERE duration > 500 AND destination = 'Paris';
@@ -54,11 +56,11 @@ DROP COLUMN airline;
 
 #ALTER TABLE - ALTER/MODIFY DATATYPE
 
-ALTER TABLE flights
-MODIFY COLUMN origin CHAR(3);
+ALTER TABLE table MODIFY COLUMN column_name data_type;
 
+ALTER TABLE players MODIFY COLUMN identityNumber CHAR(10) PRIMARY KEY NOT NULL;
 
-SELECT origin, destination FROM flights WHERE origin = 'Mashhad';
+**********************************************************
 
 .mode columns     #Show data in columns mode   
 .headers yes      #Show headers (It shows to me even without calling this query)
