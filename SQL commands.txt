@@ -28,6 +28,8 @@ SELECT * FROM flights;
 SELECT origin, destination FROM flights WHERE origin = 'Mashhad';
 
 SELECT * FROM flights WHERE duration > 500;
+
+SELECT * FROM employees WHERE salary <> 24000;      # <> or != denote "Not Equal to"
  
 SELECT * FROM flights WHERE duration > 500 AND destination = 'Paris';
 
@@ -87,7 +89,7 @@ UPDATE student_tbl SET location = "dormitory" WHERE nationality IS NOT "Iranian"
 UPDATE student_tbl SET fund_eligible = "yes" WHERE aveGrade >= 19;
 
 
-*************** DELETE *******************
+*************** DELETE ************************
 DELETE FROM flights WHERE destination = 'Tabriz';
 
 DELETE FROM customers WHERE customerName = "Yasmine"
@@ -95,12 +97,84 @@ DELETE FROM customers WHERE customerName = "Yasmine"
 DELETE FROM flights;   #It deletes the whole table
 
 
+
+******************WHERE Condition (Filtering)**************************
+After WHERE we use a statement with a column and a value and an operator in between.
+Operators are : Comparison operators ( = , != or <> , > , < , >= , <= , !> , !<) and 
+Logical operators (BETWEEN , LIKE , IN , ALL , AND , ANY , EXISTS , NOT , OR , IS NULL , UNIQUE)
+
+SELECT studentName, studentNumber from student_tbl WHERE faculty = "Engineering" ;
+
+SELECT studentName, studentNumber from student_tbl WHERE faculty != "Engineering";
+
+SELECT studentName, studentNumber from student_tbl WHERE aveMark >= 19;
+
+SELECT studentName, studentNumber from student_tbl WHERE faculty IN "Engineering";
+
+----------------------------
+SELECT * from student_tbl WHERE [condition1] AND [condition2]...AND [conditionN]; 
+
+
+SELECT studentName, studentNumber from student_tbl WHERE date_of_birth BETWEEN '2010-06-01' AND '2014-05-30';
+
+SELECT * from student_tbl WHERE faculty LIKE 'Sc%';       # % represents 0,1 or Multiple characters
+
+SELECT * from student_tbl WHERE faculty IN ('Engineering', 'Science');
+
+
+SELECT *  FROM invoices  WHERE Total > 2 AND (BillingCountry = 'USA' OR BillingCountry = 'France'); 
+
+
+Other Logical Operators Description:
+
+ALL : Used to compare a single value to all the values in another value set.
+
+AND: Allows for the existence of multiple conditions in an SQL statement's WHERE clause.
+
+ANY: Used to compare a value to any applicable value in the list as per the condition.
+
+BETWEEN: Used to search for values that are within a set of values, given the minimum value and the maximum value.
+
+EXISTS: Used to search for the presence of a row in a specified table that meets a certain criterion.
+
+IN: Used to compare a value to a list of literal values that have been specified.
+
+LIKE: Used to compare a value to similar values using wildcard operators.
+
+NOT: Reverses the meaning of the logical operator with which it is used. For example: NOT EXISTS, NOT BETWEEN, NOT IN, etc. This is a negate operator.
+
+OR: Used to combine multiple conditions in an SQL statement's WHERE clause.
+
+IS NULL: Used to compare a value with a NULL value.
+
+UNIQUE: Searches every row of a specified table for uniqueness (no duplicates).
+
+
+
+*************Operators (+ - / % BETWEEN LIKE IN) **************************
+SELECT * FROM flights WHERE duration + stoppage_time <= 7;
+
+SELECT * FROM employees WHERE salary / hours <=20;
+
+SELECT allowance / salary * 100 FROM employee; 
+
+SELECT * FROM employees WHERE hours % 2 = 0;     # % : remainder
+
+SELECT salary + 500 FROM employees:
+
+SELECT * FROM flights WHERE origin LIKE '%a%';
+
+
 ************** Other Clauses *************
 * LIMIT   *ORDER BY     *GROUP BY    *HAVING 
 
-SELECT * FROM flights ORDER BY duration;   
+SELECT * FROM flights ORDER BY duration DESC;     #default Order mode is Ascending (ASC)
+
+SELECT * FROM flights ORDER BY duration DESC, stops ASC;       
 
 SELECT * FROM flights ORDER BY duration LIMIT 10;           #Shows you Top 10 based on duration
+
+
 
 SELECT * FROM flights GROUP BY origin;      #It shows just uique origins...
 
