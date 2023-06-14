@@ -67,6 +67,8 @@ ALTER TABLE table MODIFY COLUMN column_name data_type;
 
 ALTER TABLE players MODIFY COLUMN identityNumber CHAR(10) PRIMARY KEY NOT NULL;
 
+ALTER TABLE vehicle ADD FOREIGN KEY (ownerID) REFERENCES owner (ownerID);
+
 
 **********************************************************
 
@@ -109,7 +111,7 @@ SELECT studentName, studentNumber from student_tbl WHERE faculty != "Engineering
 
 SELECT studentName, studentNumber from student_tbl WHERE aveMark >= 19;
 
-SELECT studentName, studentNumber from student_tbl WHERE faculty IN "Engineering";
+SELECT studentName, studentNumber from student_tbl WHERE faculty IN "(Engineering" , "Science");
 
 ----------------------------
 SELECT * from student_tbl WHERE [condition1] AND [condition2]...AND [conditionN]; 
@@ -120,7 +122,6 @@ SELECT studentName, studentNumber from student_tbl WHERE date_of_birth BETWEEN '
 SELECT * from student_tbl WHERE faculty LIKE 'Sc%';       # % represents 0,1 or Multiple characters
 
 SELECT * from student_tbl WHERE faculty IN ('Engineering', 'Science');
-
 
 SELECT *  FROM invoices  WHERE Total > 2 AND (BillingCountry = 'USA' OR BillingCountry = 'France'); 
 
@@ -166,7 +167,7 @@ SELECT * FROM flights WHERE origin LIKE '%a%';
 
 
 ************** Other Clauses *************
-* LIMIT   *ORDER BY     *GROUP BY    *HAVING 
+* LIMIT   *ORDER BY     *GROUP BY    *HAVING   *DISTINCT
 
 SELECT * FROM flights ORDER BY duration DESC;     #default Order mode is Ascending (ASC)
 
@@ -179,6 +180,82 @@ SELECT * FROM flights ORDER BY duration LIMIT 10;           #Shows you Top 10 ba
 SELECT * FROM flights GROUP BY origin;      #It shows just uique origins...
 
 SELECT * FROM flights GROUP BY origin HAVING 3;      #HAVING works with GROUP BY 
+
+
+SELECT DISTINCT country FROM customers;
+
+SELECT DISTINCT faculty, country FROM student_tbl;
+
+
+*********************CONSTRAINT & Keys ******************************
+CONSTRAINTs are NOT NULL, UNIQUE, PRIMARY KEY, FOREIGN KEY, CHECK, DEFAULT, CREATE INDEX
+
+CREATE TABLE table_order( 
+    order_id INT, 
+    date_time DATETIME, 
+    table_id INT, 
+    waiter_id INT, 
+    PRIMARY KEY (order_id), 
+    FOREIGN KEY (table_id) REFERENCES tbl(table_id), 
+    FOREIGN KEY (waiter_id) REFERENCES waiter(waiter_id));
+
+
+
+CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    City varchar(255) DEFAULT 'Sandnes'
+);
+
+
+CREATE TABLE Orders (
+    ID int NOT NULL,
+    OrderNumber int NOT NULL,
+    OrderDate date DEFAULT GETDATE()
+);
+
+
+CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    CHECK (Age>=18)
+);
+
+#To allow naming of a CHECK constraint, and for defining a CHECK constraint on multiple columns, use the following SQL syntax:
+
+CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    City varchar(255),
+    CONSTRAINT CHK_Person CHECK (Age>=18 AND City='Sandnes')
+);
+
+CREATE TABLE Orders (
+    OrderID int NOT NULL,
+    OrderNumber int NOT NULL,
+    PersonID int,
+    PRIMARY KEY (OrderID),
+    FOREIGN KEY (PersonID) REFERENCES Persons(PersonID)
+);
+
+ALTER TABLE Orders
+DROP FOREIGN KEY FK_PersonOrder;
+
+#To allow naming of a PRIMARY KEY constraint, and for defining a PRIMARY KEY constraint on multiple columns, use the following SQL syntax:
+
+CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    CONSTRAINT PK_Person PRIMARY KEY (ID,LastName)
+);
 
 
 ****************** JOIN ************************
