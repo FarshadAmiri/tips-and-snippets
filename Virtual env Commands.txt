@@ -1,5 +1,6 @@
 #Setting up a virtual env
->>> python -m venv "C:\Virtual_envs\ai"
+>>> python -m venv venv_name
+>>> python -m venv venv
 
 # Activaion
 >>> C:\Virtual_envs\ai\Scripts\activate
