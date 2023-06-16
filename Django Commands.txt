@@ -1,6 +1,8 @@
 #Starting Django project
 Django-admin startproject PROJECT_NAME
 
+manage.py file can be used instead of Django-admin command when it's created after starting the project
+
 #run the website
 python manage.py runserver
 
