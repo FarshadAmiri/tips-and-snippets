@@ -26,9 +26,12 @@ steps you should probably follow for deploying a Django project on a Linux (Debi
 
 >>>pip3 install django
 
->>>django-admin startproject myproject
 
-...
+#check django version
+>>python3 -m django --version
+
+
+>>>django-admin startproject myproject
 
 
 #remove a venv
