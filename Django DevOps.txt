@@ -1,0 +1,35 @@
+steps you should probably follow for deploying a Django project on a Linux (Debian-ubuntu) system (server):
+
+#Check python version:
+>>>python3 --version
+
+
+#Installing python virtualenv package:
+>>>pip3 install viertualenv
+
+
+#locate to the desired directory to create project folder
+>>>pwd           #Print working directory
+>>>cd , cd...
+
+
+#Copy virtualenv files into desired folder name in current directory
+>>>~/.local/bin/virtualenv venv_name
+
+
+#Activate the venv
+>>>source venv_name/bin/Scripts/activate
+
+
+>>cd..    >>cd..
+
+
+>>>pip3 install django
+
+>>>django-admin startproject myproject
+
+...
+
+
+#remove a venv
+rm -rf venv_name
