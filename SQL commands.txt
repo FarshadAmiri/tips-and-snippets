@@ -17,8 +17,7 @@ SHOW COLUMNS FROM flights;
 
 SHOW DATABASES;
 
-
-****************SELECT***********************
+*****************SELECT***********************
 SELECT origin FROM flights;
 
 SELECT origin, duration, destination FROM flights;
