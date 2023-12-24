@@ -1,0 +1,9 @@
+txt = "Following a seven-day pause in the war on Gaza, the Israeli regime is conducting what it had done best since October 7: Bombing civilian sites with powerful and indiscriminate force, killing women and children while flattening residential zones to the ground. A spokesman for the Palestinian health ministry said the occupation regime was committing new massacres in the Gaza Strip immediately after the end of the truce. The Gaza government media office said the international community, led by the United States, bears responsibility for the Israeli crimes after giving it the green light to continue the war without showing any regard to the laws of war and international and humanitarian laws.Experts believe the Israeli occupation would not have been allowed to resume its devastating attacks against Gaza without a greenlight from Washington. The same greenlight with which the United States allowed the regime to start the war on the Gaza Strip. The Israeli regime resumed its aggression on the besieged Gaza Strip while U.S. Secretary of State Tony Blinken was still in Israel. Blinken, whose boasting of his Jewish heritage enraged several regional leaders in the first days of Israeli aggression, stated that Washington is backing Tel Aviv’s war on Gaza."
+
+var encrypted = CryptoJS.AES.encrypt(txt, "abcdefgh12345678", {mode: CryptoJS.mode.ECB});
+
+var encryptedTxt = encrypted.toString();
+
+var decrypt = CryptoJS.AES.decrypt(encryptedTxt, "abcdefgh12345678", {mode: CryptoJS.mode.ECB});
+
+decrypt.toString(CryptoJS.enc.Utf8);
