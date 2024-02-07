@@ -1,0 +1,226 @@
+{% extends "fetch_data\\base.html" %}
+{% load static %}
+{% load mathfilters %}
+
+{% block head-title %}
+    <title>Fetches table</title>
+{% endblock %}
+
+{% block head-static %}
+<script type="text/javascript" src="{% static 'js/fetch_data/my_or_all_fetches.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/fetch_data/my_or_all_fetches.css' %}">
+{% endblock %}
+
+
+{% block body %}
+<div class="container-fluid" style="padding: 40px">
+<div class="row" style="padding: 25px; border-radius: 25px; background-color: #ffffff; margin: 6px">
+    <div class="col-12" style="background-color: #ffffff ; padding: 20px; padding-bottom: 10px; border-radius: 25px;">
+        {% if all_tasks %}<span class="title">All users fetch requests: </span>{% else %}<p class="title">Your fetch requests: <span class="username" style="font-size: 26px">&nbsp @{{user.username}}</span></p>{% endif %}</p>
+        <table class="table table-responsive table-hover">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                {% if all_tasks %}
+                    <th scope="col">Queried by</th>
+                {% endif %}
+                <th scope="col">Area tag</th>
+                <th scope="col">Type</th>
+                <th scope="col">Status</th>
+                <th scope="col">Progress</th>
+                <th scope="col">Request time</th>
+                <th scope="col">Lon</th>
+                <th scope="col">Lat</th>
+                <th scope="col">Time inteval</th>
+                <th scope="col">#Objects</th>
+                <th scope="col">Result</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for main_task in page_parent_tasks %}
+            <tr class="clickable parent-task" data-toggle="collapse" id="parent-row{{ forloop.counter0 }}" data-target=".child-row{{ forloop.counter0 }}" aria-expanded="true" aria-controls=".child-row{{ forloop.counter0 }}">
+                {% if main_task.child_task.all|length > 0 %}
+                <td>{{ main_task.task_id }}&nbsp<img id="chevron-down"></td>
+                {% else %}
+                <td>{{ main_task.task_id }}</td>
+                {% endif %}
+                {% if all_tasks %}
+                    <td class="username">@{{main_task.user_queued}}</td>
+                {% endif %}
+                {% comment %} <td class="info">{{task.area_tag.all()}}</td> {% endcomment %}
+                <td class="info">
+                {% for area_tag in main_task.area_tag.all %}
+                    {{ area_tag }}
+                    {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+                </td>
+                {% if main_task.task_type == "fetch" %}
+                    <td>Fetch</td>
+                {% elif main_task.task_type == "fetch_infer" %}
+                    <td>Fetch & Inference</td>
+                {% elif main_task.task_type == "infer" %}
+                    <td>Inference</td>
+                {% endif %}
+
+                {% if main_task.task_status == "fetching" %}
+                    <td>Fetch in progress</td>
+                {% elif main_task.task_status == "fetched" %}
+                    <td>Fetching completed</td>
+                {% elif main_task.task_status == "inferencing" %}
+                    <td>Inference in progress</td>
+                {% elif main_task.task_status == "inferenced" %}
+                    <td>Inferencing completed</td>
+                {% endif %}
+
+                <td>{{ main_task.fetch_progress }}%</td>
+                <td>{{ main_task.time_queued }}</td>
+                <td scope="col"><span>Min: </span><span class="lonlat">{{main_task.lon_min|floatformat:4 }}</span><br><span>Max: </span><span class="lonlat">{{main_task.lon_max|floatformat:4}}</span></td>
+                <td scope="col"><span>Min: </span><span class="lonlat">{{main_task.lat_min|floatformat:4 }}</span><br><span>Max: </span><span class="lonlat">{{main_task.lat_max|floatformat:4}}</span></td>
+                <td scope="col"><span class="date">{{main_task.time_from}}</span> to<br><span class="date">{{main_task.time_to}}</span></td>
+                <td class="bold_number">{{main_task.detected_objects.all|length}}</td>
+                <td><a href="{% url 'fetch_data:task_result' task_id=main_task.task_id filters=None %}">Result</a></td>
+            </tr>
+            {% if main_task.is_parent %}
+            {% for child_task in main_task.child_task.all|dictsort:"time_queued" %}
+            <tr class="child-task">
+                <td>{{ child_task.task_id}}</td>
+                {% if all_tasks %}
+                    <td class="username">@{{main_task.user_queued}}</td>
+                {% endif %}
+                <td class="info">
+                {% if child_task.area_tag.all|length > 0 %}
+                {% for area_tag in child_task.area_tag.all %}
+                    {{ area_tag }}
+                    {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+                {% else %}
+                ---
+                {% endif %}
+                </td>
+                {% if child_task.task_type == "fetch" %}
+                    <td>Fetch</td>
+                {% elif child_task.task_type == "fetch_infer" %}
+                    <td>Fetch & Inference</td>
+                {% elif child_task.task_type == "infer" %}
+                    <td>Inference</td>
+                {% endif %}
+
+                {% if child_task.task_status == "fetching" %}
+                    <td>Fetch in progress</td>
+                {% elif child_task.task_status == "fetched" %}
+                    <td>Fetching completed</td>
+                {% elif child_task.task_status == "inferencing" %}
+                    <td>Inference in progress</td>
+                {% elif child_task.task_status == "inferenced" %}
+                    <td>Inferencing completed</td>
+                {% endif %}
+
+                <td>{{ child_task.fetch_progress }}%</td>
+                <td>{{ child_task.time_queued }}</td>
+                <td scope="col"><span>Min: </span><span class="lonlat">{{child_task.lon_min|floatformat:4 }}</span><br><span>Max: </span><span class="lonlat">{{child_task.lon_max|floatformat:4}}</span></td>
+                <td scope="col"><span>Min: </span><span class="lonlat">{{child_task.lat_min|floatformat:4 }}</span><br><span>Max: </span><span class="lonlat">{{child_task.lat_max|floatformat:4}}</span></td>
+                <td scope="col"><span class="date">{{child_task.time_from}}</span> to<br><span class="date">{{child_task.time_to}}</span></td>
+                <td class="bold_number">{{child_task.detected_objects.all|length}}</td>
+                <td><a href="{% url 'fetch_data:task_result' task_id=child_task.task_id filters=None %}">Result</a></td>
+            </tr>
+                {% comment %} <div class="details-content">
+                    <p>Lon: <span class="lonlat">{{task.lon_min|floatformat:4 }}</span> to <span class="lonlat">{{task.lon_max|floatformat:4}}</span>
+                    &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp X: <span class="lonlat">{{task.x_min}}</span> to <span class="lonlat">{{task.x_max}}</span>
+                    &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Zoom: <span class="lonlat">{{task.zoom}}</span>
+                    &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp From <span class="date">{{task.time_from}}</span> to <span class="date">{{task.time_to}}</span>
+                    </p>
+                    <p>Lat:  <span class="lonlat">{{task.lat_min|floatformat:4}}</span>  to <span class="lonlat">{{task.lat_max|floatformat:4}}</span>
+                    &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Y: <span class="lonlat">{{task.y_min}}</span> to <span class="lonlat">{{task.y_max}}</span>
+                    </p>
+                </div> {% endcomment %}
+            {% comment %} </td>
+            </tr> {% endcomment %}
+            {% endfor %}
+            {% endif %}
+            {% endfor %}
+            {% comment %} <div class="pagination"> {% endcomment %}
+            
+            <nav style="text-align: center; background-color: White; padding-top: 10px">
+                <ul class="pagination">
+                {# First #}
+                {% comment %} {% for n_page in range(1, num_pages + 1) %} {% endcomment %}
+                {% if num_pages <= 10 %}
+                {% for n_page in pages_range %}
+                    {% if n_page == page_parent_tasks.number %}
+                        <li class="page-item active"><a class="page-link" href="?page={{n_page}}">{{ n_page }}</a></li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" href="?page={{ n_page }}">{{ n_page }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                {% else %}
+                {% for n_page in pages_range %}
+                    {% if n_page <= 10 %}
+                        {% if n_page == page_parent_tasks.number %}
+                            <li class="page-item active"><a class="page-link" href="?page={{n_page}}">{{ n_page }}</a></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{ n_page }}">{{ n_page }}</a></li>
+                        {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                    {% if page_parent_tasks.number > 10 %}
+                    <li class="page-item active"><a class="page-link" href="?page={{ page_parent_tasks.number }}">{{ page_parent_tasks.number }}</a></li>
+                    {% endif %}
+                    {% if page_parent_tasks.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{page_parent_tasks.next_page_number}}">Next</a></li>
+                    {% endif %}
+                    {% if page_parent_tasks.number != num_pages %}
+                    <li class="page-item"><a class="page-link" href="?page={{num_pages}}">{{num_pages}}</a></li>
+                    {% endif %}
+                {% endif %}
+                </ul>
+            </nav>
+            </div>
+            <tbody>
+        </table>
+            <nav style="text-align: center; background-color: White; padding-top: 10px">
+                <ul class="pagination">
+                {# First #}
+                {% comment %} {% for n_page in range(1, num_pages + 1) %} {% endcomment %}
+                {% if num_pages <= 10 %}
+                {% for n_page in pages_range %}
+                    {% if n_page == page_parent_tasks.number %}
+                        <li class="page-item active"><a class="page-link" href="?page={{n_page}}">{{ n_page }}</a></li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" href="?page={{ n_page }}">{{ n_page }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                {% else %}
+                {% for n_page in pages_range %}
+                    {% if n_page <= 10 %}
+                        {% if n_page == page_parent_tasks.number %}
+                            <li class="page-item active"><a class="page-link" href="?page={{n_page}}">{{ n_page }}</a></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{ n_page }}">{{ n_page }}</a></li>
+                        {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                    {% if page_parent_tasks.number > 10 %}
+                    <li class="page-item active"><a class="page-link" href="?page={{ page_parent_tasks.number }}">{{ page_parent_tasks.number }}</a></li>
+                    {% endif %}
+                    {% if page_parent_tasks.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{page_parent_tasks.next_page_number}}">Next</a></li>
+                    {% endif %}
+                    {% if page_parent_tasks.number != num_pages %}
+                    <li class="page-item"><a class="page-link" href="?page={{num_pages}}">{{num_pages}}</a></li>
+                    {% endif %}
+                {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block head-end_body %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/datatables.css' %}">
+<script type="text/javascript" src="{% static 'js/datatables.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/responsive.bootstrap5.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/responsive.bootstrap5.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-table.min.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/bootstrap-table.min.css' %}">
+{% endblock %}
