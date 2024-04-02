@@ -33,3 +33,35 @@ docker ps
 Run shell of a specific container
 ---------------------------------------
 docker exce -it <Container_name> /bin/sh    *(-it : Interactive Terminal)
+
+
+
+Install a package on a docker linux
+----------------------------------------
+Step 1: Identify the Linux Distribution
+
+-> cat /etc/os-release
+----------
+Step 2: Install the Appropriate Package Manager
+
+Debian/Ubuntu: 
+-> apt-get update
+
+CentOS/Fedora
+-> yum update
+
+Alpine
+-> apk update
+-----------
+Step 3: Install the Package (eg. nano)
+
+Debian/Ubuntu: 
+-> apt-get install nano -y
+
+CentOS/Fedora
+-> yum install nano -y
+
+
+Alpine
+-> apk add nano
+------------------------------------------
