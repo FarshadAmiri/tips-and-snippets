@@ -29,10 +29,11 @@ sudo service redis-server restart
 
 Redis internal commands:
 -------------------------------------------
-exit
+EXIT
+SELECT n_db
 KEYS *
-set key Value
-get key
+SET key Value
+GET key
 
 
 

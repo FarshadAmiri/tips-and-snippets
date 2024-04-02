@@ -1,0 +1,35 @@
+This command builds and starts all the services defined in your docker-compose.yml file.
+The --build flag indicates that Docker Compose should build any images that have changed
+since the last build. If the images are already built, it will reuse the existing ones.
+* The -d flag stands for "detached" mode, which means the containers will run in the
+background. This allows you to continue using your terminal without being attached to the
+container logs.
+---------------------------------------
+docker-compose up -d --build
+
+
+
+
+This command starts the services defined in your docker-compose.yml file.
+---------------------------------------
+docker-compose up (on the directory that contains docker-compose.yml file)
+
+
+
+
+This command stops and removes the containers, networks, and volumes created by Docker Compose.
+It effectively shuts down the services defined in your docker-compose.yml file. This command is
+useful when you want to clean up your environment or stop the services temporarily.
+---------------------------------------
+docker-compose down   (on the directory that contains docker-compose.yml file)
+
+
+List running containers
+---------------------------------------
+docker ps
+
+
+
+Run shell of a specific container
+---------------------------------------
+docker exce -it <Container_name> /bin/sh    *(-it : Interactive Terminal)
