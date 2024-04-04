@@ -1,0 +1,8 @@
+Start a Celery worker
+-----------------------------------
+celery -A PROJECT_NAME worker -l INFO
+
+
+Deconfigure previous tasks
+-----------------------------------
+celery -A PROJECT_NAME purge
