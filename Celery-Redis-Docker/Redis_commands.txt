@@ -31,6 +31,16 @@ Redis on Windows launch commands
 redis-server --port 6380 --slaveof 127.0.0.1 6379
 
 
+Check Redis on WSL responding from host (windows):
+------------------------------------------
+redis-cli -h 172.18.120.75 ping
+
+
+Disable protected mode
+------------------------------------------
+redis-cli -h 127.0.0.1 -p 6379 CONFIG SET protected-mode no
+
+
 Redis internal commands:
 -------------------------------------------
 EXIT
