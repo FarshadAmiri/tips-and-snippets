@@ -1,10 +1,16 @@
 Start a Celery worker
 -----------------------------------
-celery -A PROJECT_NAME worker -l INFO
+celery -A PROJECT_NAME worker -l INFO -Q QUEUE_NAME
 celery -A satellite_monitoring worker -l INFO
+celery -A web_one worker -l INFO -Q queue1
 
 
 Deconfigure previous tasks
 -----------------------------------
 celery -A PROJECT_NAME purge
 celery -A satellite_monitoring purge
+
+
+Check the worker's status
+-----------------------------------
+celery -A PROJECT_NAME status
