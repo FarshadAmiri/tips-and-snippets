@@ -1,8 +1,8 @@
 Start a Celery worker
 -----------------------------------
-celery -A PROJECT_NAME worker -l INFO -Q QUEUE_NAME
-celery -A satellite_monitoring worker -l INFO
-celery -A web_one worker -l INFO -Q queue1
+celery -A PROJECT_NAME worker -l INFO -Q QUEUE_NAME -P threads
+celery -A satellite_monitoring worker -l INFO -P threads  ("-P threads" for Windows) 
+celery -A web_one worker -l INFO -Q queue1 -P threads
 
 
 Deconfigure previous tasks
@@ -14,3 +14,10 @@ celery -A satellite_monitoring purge
 Check the worker's status
 -----------------------------------
 celery -A PROJECT_NAME status
+
+
+Celery Flower(inspector):
+-----------------------------------
+1. Install ( >> pip install flower )
+2. Usage: >> celery [celery args] flower [flower args]
+eg. >> celery flower --port=5555 (access it using localhost:5555)

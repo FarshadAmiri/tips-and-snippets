@@ -27,17 +27,18 @@ sudo service redis-server stop
 sudo service redis-server restart
 
 Redis on Windows launch commands
-------------------------------------------
+-------------------------------------------
 redis-server --port 6380 --slaveof 127.0.0.1 6379
 
 
 Check Redis on WSL responding from host (windows):
-------------------------------------------
+-------------------------------------------
+redis-cli -h <WSL_IP> ping
 redis-cli -h 172.18.120.75 ping
 
 
 Disable protected mode
-------------------------------------------
+-------------------------------------------
 redis-cli -h 127.0.0.1 -p 6379 CONFIG SET protected-mode no
 
 
@@ -52,7 +53,7 @@ GET key
 
 Inspecting queues
 Finding the number of tasks in a queue:
--------------------------------------------
+--------------------------------------------
 redis-cli -h HOST -p PORT -n DATABASE_NUMBER llen QUEUE_NAME
 
 *The default queue is named celery. To get all available queues, invoke:
