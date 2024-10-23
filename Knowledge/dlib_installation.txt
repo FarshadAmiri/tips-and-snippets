@@ -1,0 +1,2 @@
+1- install cmake (from its .msi file for your OS)
+2- install dlib-binary wheel manually for your python version (without pip. search it and find it in github)
