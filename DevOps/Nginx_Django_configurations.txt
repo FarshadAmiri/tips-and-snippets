@@ -1,0 +1,121 @@
+0- Assumptions:
+Website delivery port: 8081
+Django WSGI server (waitress): 9000
+------------------------------------------------------
+
+1- Get Nginx for your OS and store it at C:\
+------------------------------------------------------
+
+2- create 2 folders named "sites-enabled" and "sites-available" on Nginx root dir
+------------------------------------------------------
+
+3- Install waitress on Python venv
+------------------------------------------------------
+
+4- create a file named runserver.py and store it at root project directory:
+
+from waitress import serve
+from translator.wsgi import application
+
+if __name__ == "__main__":
+    serve(application, host="localhost", port='9000')
+------------------------------------------------------
+
+5- create a {PROJECT_NAME}_conf.conf file at root project directory:
+this file intended to be a replica of what should be placed at Nginx program.
+it has no functional use.
+
+# mysite_nginx.conf
+
+# configuration of the server
+server {
+    # the port your site will be served on
+    listen      8081;
+    # the domain name it will serve for
+    server_name 127.0.0.1; # substitute your machine's IP address or FQDN
+    charset     utf-8;
+
+    # max upload size
+    client_max_body_size 75M;   # adjust to taste
+
+    # Django media
+    location /media  {
+        alias /path/to/your/mysite/media;  # your Django project's media files - amend as required
+    }
+
+    location /static {
+        alias D:/Projects/Offline_translator-webapp/static; # your Django project's static files - amend as required
+    }
+
+    # Finally, send all non-media requests to the Django server.
+    location / {
+        proxy_pass http://localhost:9000; # See output from runserver.py
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+------------------------------------------------------
+
+6- copy the config file you just created at project dir ({PROJECT_NAME}_conf.conf)
+into the sites_enabled and the sites_available folders of nginx main folder program.
+------------------------------------------------------
+
+7- Open "C:\nginx\conf\nginx.conf" and do 2 things:
+firstly, change server port in server curly brace to some port which is not used like 10:
+server {
+        listen       10;
+....
+}
+
+secondly, add the following line into the http curly brace:
+include       C:/nginx-1.24.0/sites-enabled/translator_nginx.conf;
+------------------------------------------------------
+
+7*- nginx.conf should look like this finally: (with or without comments lines)
+
+worker_processes  1;
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    include       C:/nginx-1.24.0/sites-enabled/translator_nginx.conf;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+
+    #gzip  on;
+
+    server {
+        listen       10;
+        server_name  localhost;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        location / {
+            root   html;
+            index  index.html index.htm;
+        }
+
+        #error_page  404              /404.html;
+
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+    }
+}
+------------------------------------------------------
