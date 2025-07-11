@@ -1,0 +1,20 @@
+Problem: you want to change directory or copy a virtual environment:
+
+1. Create a new venv in the desired directory
+
+2. copy site-packages folder of the old venv to its place on new venv
+
+3. now you don't have launchers in Scripts folder which you need 
+them generally for Ipython and Jupyter. to install launchers:
+
+3.1 activate new_venv then:
+
+3.2 (new_venv) pip freeze > installed.txt
+3.3 (new_venv) pip install --force-reinstall --no-deps --ignore-installed -r installed.txt
+
+It will install all the launchers of all your packages with minimum download requirements.
+
+(you may have to remove torch packages from that installed.txt to avoid errors.
+No problem! you don't need torch launchers at all.)
+
+--- Done ---
