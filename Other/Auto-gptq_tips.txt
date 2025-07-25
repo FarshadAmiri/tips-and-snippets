@@ -1,0 +1,7 @@
+Auto-gptq is not compatible with CUDA12.
+
+So recommended packages are:
+* CUDA 11.8 (Installed on OS)
+* torchx.x + cuda11.8
+* auto-gptq>=0.6.0 
+
