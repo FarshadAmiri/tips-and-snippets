@@ -1,6 +1,7 @@
-Auto-gptq is not compatible with CUDA12.
+Auto-gptq is not compatible with CUDA>=12.
 
 So recommended packages are:
+* Python 3.10 (Python>=3.12 is not supported by auto-gptq)
 * CUDA 11.8 (Installed on OS)
 * torchx.x + cuda11.8
 * auto-gptq>=0.6.0 
