@@ -1,4 +1,5 @@
 Auto-gptq is not compatible with CUDA>=12.
+(GPTQModel package is a good alternative with less problems)
 
 So recommended packages are:
 * Python 3.10 (Python>=3.12 is not supported by auto-gptq)
